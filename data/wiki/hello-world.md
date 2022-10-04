@@ -93,19 +93,19 @@ $ mirage configure -t unix
 2. Installating dependencies:
 
 - `opam install` for installing the build tools in the opam switch.
-- `opam-monorepo lock` resolves the unikernel dependencies a generates a 
+- `opam-monorepo lock` resolves the unikernel dependencies and generates a 
   _lockfile_.
 - `lockfile depext` installs the external dependencies of the unikernel
   dependencies (another set of potential build tools).
 - `opam-monorepo pull` locally fetch unikernel dependencies.
 
-NOTE: while performing the _lock_ step, an additional repository 
-<https://github.com/mirage/opam-overlays.git> is added in your opam switch. 
-This repository contains packages that have been changed to use the _dune_ build 
-system. The `--extra-repo` argument in `mirage configure` changes the additional 
-repository to use. `--no-extra-repo` can be used to disable the extra repository, 
-but the _lock_ step might fail because of dependencies that are not using the 
-_dune_ build system.
+NOTE: while performing the _lock_ step, an additional repository
+<https://github.com/mirage/opam-overlays.git> is added in your opam switch. This
+repository contains packages that have been changed to use the _dune_ build
+system. The `--extra-repo` argument in `mirage configure` changes the additional
+repository to use. `--no-extra-repo` can be used to disable the extra
+repository, but the _lock_ step might fail because of dependencies that are not
+using the _dune_ build system.
 
 ```json
 $ make depend
@@ -247,9 +247,11 @@ module Hello (Time : Mirage_time.S) = struct
 end
 ```
 
-To veteran OCaml programmers among you, this might look a little odd: We have a
-main `Hello` module parameterised by a module (`Time`, of type `Mirage_time.S`) that contains a method `start` taking an ignored parameter `_time` (an instance of a `time`).  This is the basic structure required to make this a MirageOS unikernel
-rather than a standard OCaml POSIX application.
+To veteran OCaml programmers among you, this might look a little odd: we have a
+main `Hello`, module parameterised by a module (`Time`, of type
+`Mirage_time.S`), that contains a method `start` taking an ignored parameter
+`_time` (an instance of a `time`).  This is the basic structure required to make
+this a MirageOS unikernel rather than a standard OCaml POSIX application.
 
 The module type for our `Time` module, `Mirage_time.S`, is defined in an
 external package [mirage-time](https://github.com/mirage/mirage-time).  The name `S` for "the module type of things like this" is a common OCaml convention (comparable to naming the most-used type in a module `t`).  There are many packages defining module types for use in Mirage.
